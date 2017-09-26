@@ -1,7 +1,5 @@
-control/RestService$1.class
-FtoCService.class
-control/RestService.class
-CToService.class
+model/Answer.class
 model/Case.class
 model/Transition.class
+control/RestService.class
 model/State.class

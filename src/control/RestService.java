@@ -17,13 +17,13 @@ public class RestService {
 	@GET
 	@Path("/case/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Case getRotaDaLinha(@PathParam("id") Integer id) {
+	public Case getCase(@PathParam("id") Integer id) {
 		try {
 			State state = new State("Start", "Female patient, 54 years old, with shortness of breath in the last 5 hours.");
 			State state2 = new State("Meio", "Blablablabla.");
 
-			Answer answer1 = new Answer("Provide oxygen by a mask", "The patient feels better");
-			Answer answer2 = new Answer("Immediate assessment", "Patient conscious. Regular abdominal movements. Breathing by mouth");
+			Answer answer1 = new Answer("Provide oxygen by a mask", "The patient feels better", Answer.CORRECT);
+			Answer answer2 = new Answer("Immediate assessment", "Patient conscious. Regular abdominal movements. Breathing by mouth", Answer.SEMI_CORRECT);
 			Answer answer3 = new Answer("Provide mechanical ventilation", "An oxygen mask is enough");
 			Answer answer4 = new Answer("Provide an oxygen catheter", "The patient is still with shortness of breath");
 //			Answer answer5 = new Answer("Examine the patient", "Your patient does not have conditions to be examined");
@@ -34,9 +34,16 @@ public class RestService {
 			state.getAnswers().add(answer4);
 //			state.getAnswers().add(answer5);state.getAnswers().add(answer6);
 //			state.getAnswers().add(answer7);
-			state.setCorrect_answer(0);
-			state2.getAnswers().add(answer1);state2.getAnswers().add(answer2);state2.getAnswers().add(answer3);
-
+			
+			state.setRight_score(10);
+			state.setSemi_right_score(5);
+			state.setWrong_score(-5);
+			
+			state2.getAnswers().add(answer1);state2.getAnswers().add(answer3);
+			state2.setRight_score(8);
+			state2.setSemi_right_score(3);
+			state2.setWrong_score(-7);
+			
 			
 			Case case1 = new Case();
 			case1.getStates().add(state);

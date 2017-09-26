@@ -1,6 +1,5 @@
-/home/fagner/Dropbox/Doutorado/HealthGame/GameServer/src/model/Transition.java
-/home/fagner/Dropbox/Doutorado/HealthGame/GameServer/src/model/Case.java
-/home/fagner/Dropbox/Doutorado/HealthGame/GameServer/src/model/State.java
-/home/fagner/Dropbox/Doutorado/HealthGame/GameServer/src/control/RestService.java
-/home/fagner/Dropbox/Doutorado/HealthGame/GameServer/src/CToService.java
-/home/fagner/Dropbox/Doutorado/HealthGame/GameServer/src/FtoCService.java
+/home/fagner/git/GameServer/src/model/State.java
+/home/fagner/git/GameServer/src/model/Answer.java
+/home/fagner/git/GameServer/src/control/RestService.java
+/home/fagner/git/GameServer/src/model/Case.java
+/home/fagner/git/GameServer/src/model/Transition.java

@@ -8,21 +8,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class State {
 	
-	private final String TRUE_FALSE = "t/f";
-	private final String MULTIPLE_CHOICE = "default"; // 1 correct answer
-	private final String MULTIPLE_ANSWER = "multiple"; // multiple correct answers
+	public static final String TRUE_FALSE = "t/f";
+	public static final String MULTIPLE_CHOICE = "default"; // 1 correct answer
+	public static final String MULTIPLE_ANSWER = "multiple"; // multiple correct answers
 
 	private String id;
 	private String title;
 	private String description;
 	
 	private int right_score;
+	private int semi_right_score;
 	private int wrong_score;
 	
 	private String type=MULTIPLE_CHOICE;
 	
 	private List<Answer> answers = new ArrayList<>();
-	private int correct_answer;
 	
 	public State() {
 		super();
@@ -72,14 +72,6 @@ public class State {
 		this.wrong_score = wrong_score;
 	}
 
-	public int getCorrect_answer() {
-		return correct_answer;
-	}
-
-	public void setCorrect_answer(int correct_answer) {
-		this.correct_answer = correct_answer;
-	}
-
 	public List<Answer> getAnswers() {
 		return answers;
 	}
@@ -103,4 +95,13 @@ public class State {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public int getSemi_right_score() {
+		return semi_right_score;
+	}
+
+	public void setSemi_right_score(int semi_right_score) {
+		this.semi_right_score = semi_right_score;
+	}
+
 }
