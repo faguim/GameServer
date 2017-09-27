@@ -7,8 +7,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Case {
-	private String conclusion_won_text = "Congratulations";
-	private String conclusion_lost_text = "Sorry, you have lost the game";
+	private String conclusion_won_text = "CONGRATULATIONS: YOU WON! :)";
+	private String conclusion_lost_text = "GAME OVER: YOU LOST! :P";
 	
 //	Randomize the order in which answer buttons are presented to the user.
 	private boolean randomize_answer_order;
