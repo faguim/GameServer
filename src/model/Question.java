@@ -12,16 +12,22 @@ public class Question {
 	public static final String MULTIPLE_CHOICE = "default"; // 1 correct answer
 	public static final String MULTIPLE_ANSWER = "multiple"; // multiple correct answers
 
-	private String id;
 	private String title;
 	private String description;
 	
 	private int right_score;
 	private int semi_right_score;
 	private int wrong_score;
-	
 	private int max_score;
 	
+//	Feedback Information if question type is "multiple"
+	private String incorrect_feedback_text;
+	private String correct_feedback_text;
+	
+//	There are 3 question types to choose from on each question: T/F, multiple choice, and multiple answer:
+//	  - T/F - Leave the "question type" as default. Then delete answer 3 and 4 and the question will automatically only display 2 buttons.
+//	  - Multiple Choice (1 correct answer) - use the word "default" as the "question type".
+//	  - Multiple Answer (multiple correct answers) - use the word "multiple" as the "question type".
 	private String type=MULTIPLE_CHOICE;
 	
 	private List<Answer> answers = new ArrayList<>();
@@ -30,17 +36,12 @@ public class Question {
 		super();
 	}
 
-	public Question(String id, String title, String description) {
-		super();
-		this.id = id;
-		this.setTitle(title);
-		this.description = description;
-	}
-
 	public Question(String title, String description) {
 		super();
 		this.setTitle(title);
 		this.description = description;
+		this.setCorrect_feedback_text("<h1>This is correct</h1> Correct feedback text here..");
+		this.setIncorrect_feedback_text("<h1>That is incorrect</h1> Incorrect feedback text here...");
 	}
 
 	public String getDescription() {
@@ -48,14 +49,6 @@ public class Question {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public int getRight_score() {
@@ -109,20 +102,33 @@ public class Question {
 	public int getMax_score() {
 		for (Answer answer : answers) {
 			if (answer.getCorrectness() == 2) {
-				System.out.println("somou 2");
 				max_score += right_score;
 			}
 			if (answer.getCorrectness() == 1) {
-				System.out.println("somou 1");
 				max_score += semi_right_score;
 			}		
 		}
-		System.out.println(max_score);
 		return max_score;
 	}
 
 	public void setMax_score(int max_score) {
 		this.max_score = max_score;
+	}
+
+	public String getIncorrect_feedback_text() {
+		return incorrect_feedback_text;
+	}
+
+	public void setIncorrect_feedback_text(String incorrect_feedback_text) {
+		this.incorrect_feedback_text = incorrect_feedback_text;
+	}
+
+	public String getCorrect_feedback_text() {
+		return correct_feedback_text;
+	}
+
+	public void setCorrect_feedback_text(String correct_feedback_text) {
+		this.correct_feedback_text = correct_feedback_text;
 	}
 
 }

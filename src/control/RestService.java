@@ -19,11 +19,11 @@ public class RestService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Case getCase(@PathParam("id") Integer id) {
 		try {
-			Question question1 = new Question("Start", "Female patient, 54 years old, with shortness of breath in the last 5 hours.");
+			Question question1 = new Question("Start", "<b>Question 1 title</b> <br/> Female patient, 54 years old, with shortness of breath in the last 5 hours.");
 			Question question2 = new Question("Meio", "Blablablabla.");
 
 			Answer answer1 = new Answer("Provide oxygen by a mask", "The patient feels better", Answer.CORRECT);
-			Answer answer2 = new Answer("Immediate assessment", "Patient conscious. Regular abdominal movements. Breathing by mouth", Answer.SEMI_CORRECT);
+			Answer answer2 = new Answer("Immediate assessment", "Patient conscious.<br/> Regular abdominal movements. <br/> Breathing by mouth", Answer.SEMI_CORRECT);
 			Answer answer3 = new Answer("Provide mechanical ventilation", "An oxygen mask is enough");
 			Answer answer4 = new Answer("Provide an oxygen catheter", "The patient is still with shortness of breath");
 //			Answer answer5 = new Answer("Examine the patient", "Your patient does not have conditions to be examined");
@@ -48,6 +48,7 @@ public class RestService {
 			Case case1 = new Case();
 			case1.getQuestions().add(question1);
 			case1.getQuestions().add(question2);
+			case1.setTimeout(10);
 
 			return case1;
 		} catch (Exception e) {

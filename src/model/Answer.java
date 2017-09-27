@@ -11,6 +11,7 @@ public class Answer {
 	private String text;
 	private String feedback_text;
 	
+//	Indicate if thw question is correct, incorrect or semi-correct.
 	private int correctness;
 	
 	public Answer() {
