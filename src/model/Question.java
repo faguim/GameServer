@@ -6,7 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class State {
+public class Question {
 	
 	public static final String TRUE_FALSE = "t/f";
 	public static final String MULTIPLE_CHOICE = "default"; // 1 correct answer
@@ -20,22 +20,24 @@ public class State {
 	private int semi_right_score;
 	private int wrong_score;
 	
+	private int max_score;
+	
 	private String type=MULTIPLE_CHOICE;
 	
 	private List<Answer> answers = new ArrayList<>();
 	
-	public State() {
+	public Question() {
 		super();
 	}
 
-	public State(String id, String title, String description) {
+	public Question(String id, String title, String description) {
 		super();
 		this.id = id;
 		this.setTitle(title);
 		this.description = description;
 	}
 
-	public State(String title, String description) {
+	public Question(String title, String description) {
 		super();
 		this.setTitle(title);
 		this.description = description;
@@ -102,6 +104,25 @@ public class State {
 
 	public void setSemi_right_score(int semi_right_score) {
 		this.semi_right_score = semi_right_score;
+	}
+
+	public int getMax_score() {
+		for (Answer answer : answers) {
+			if (answer.getCorrectness() == 2) {
+				System.out.println("somou 2");
+				max_score += right_score;
+			}
+			if (answer.getCorrectness() == 1) {
+				System.out.println("somou 1");
+				max_score += semi_right_score;
+			}		
+		}
+		System.out.println(max_score);
+		return max_score;
+	}
+
+	public void setMax_score(int max_score) {
+		this.max_score = max_score;
 	}
 
 }

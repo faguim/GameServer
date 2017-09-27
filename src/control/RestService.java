@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import model.Answer;
 import model.Case;
-import model.State;
+import model.Question;
 
 @Path("")
 public class RestService {
@@ -19,8 +19,8 @@ public class RestService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Case getCase(@PathParam("id") Integer id) {
 		try {
-			State state = new State("Start", "Female patient, 54 years old, with shortness of breath in the last 5 hours.");
-			State state2 = new State("Meio", "Blablablabla.");
+			Question question1 = new Question("Start", "Female patient, 54 years old, with shortness of breath in the last 5 hours.");
+			Question question2 = new Question("Meio", "Blablablabla.");
 
 			Answer answer1 = new Answer("Provide oxygen by a mask", "The patient feels better", Answer.CORRECT);
 			Answer answer2 = new Answer("Immediate assessment", "Patient conscious. Regular abdominal movements. Breathing by mouth", Answer.SEMI_CORRECT);
@@ -30,24 +30,24 @@ public class RestService {
 //			Answer answer6 = new Answer("Point of care ultrasound", "The patient is still with shortness of breath");
 //			Answer answer7 = new Answer("Diagnose", "If you consider that you have all elements to emit a final diagnosis, please select one of the options");
 
-			state.getAnswers().add(answer1);state.getAnswers().add(answer2);state.getAnswers().add(answer3);
-			state.getAnswers().add(answer4);
+			question1.getAnswers().add(answer1);question1.getAnswers().add(answer2);question1.getAnswers().add(answer3);
+			question1.getAnswers().add(answer4);
 //			state.getAnswers().add(answer5);state.getAnswers().add(answer6);
 //			state.getAnswers().add(answer7);
 			
-			state.setRight_score(10);
-			state.setSemi_right_score(5);
-			state.setWrong_score(-5);
+			question1.setRight_score(10);
+			question1.setSemi_right_score(5);
+			question1.setWrong_score(-5);
 			
-			state2.getAnswers().add(answer1);state2.getAnswers().add(answer3);
-			state2.setRight_score(8);
-			state2.setSemi_right_score(3);
-			state2.setWrong_score(-7);
+			question2.getAnswers().add(answer1);question2.getAnswers().add(answer3);
+			question2.setRight_score(8);
+			question2.setSemi_right_score(3);
+			question2.setWrong_score(-7);
 			
 			
 			Case case1 = new Case();
-			case1.getStates().add(state);
-			case1.getStates().add(state2);
+			case1.getQuestions().add(question1);
+			case1.getQuestions().add(question2);
 
 			return case1;
 		} catch (Exception e) {

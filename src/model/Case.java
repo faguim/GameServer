@@ -11,7 +11,7 @@ public class Case {
 	private String conclusion_lost_text = "Sorry, you have lost the game";
 	
 	private List<Transition> transitions = new ArrayList<>();
-	private List<State> states = new ArrayList<>();
+	private List<Question> questions = new ArrayList<>();
 
 	public List<Transition> getTransitions() {
 		return transitions;
@@ -19,14 +19,6 @@ public class Case {
 
 	public void setTransitions(List<Transition> transitions) {
 		this.transitions = transitions;
-	}
-
-	public List<State> getStates() {
-		return states;
-	}
-
-	public void setStates(List<State> states) {
-		this.states = states;
 	}
 
 	public String getConclusion_won_text() {
@@ -43,6 +35,14 @@ public class Case {
 
 	public void setConclusion_lost_text(String conclusion_lost_text) {
 		this.conclusion_lost_text = conclusion_lost_text;
+	}
+
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 
 }
