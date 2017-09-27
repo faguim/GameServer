@@ -1,5 +1,5 @@
 model/Answer.class
 model/Case.class
 model/Transition.class
+model/Question.class
 control/RestService.class
-model/State.class
