@@ -20,7 +20,6 @@ public class RestService {
 	@GET
 	@Path("/case/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-
 	public Case getCase(@PathParam("id") Integer id) {
 		try {
 			// Sets the title and description of a question
