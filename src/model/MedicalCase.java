@@ -1,12 +1,28 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@Table(name = "medicalcase")
 @XmlRootElement
-public class Case {
+public class MedicalCase implements Serializable{
+	private static final long serialVersionUID = 2020943116280714022L;
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+	
 	private String conclusion_won_text = "CONGRATULATIONS: YOU WON! :)";
 	private String conclusion_lost_text = "GAME OVER: YOU LOST! :P";
 	
@@ -20,9 +36,10 @@ public class Case {
 //	Control the amount of time in the countdown timer. To turn it off set the value to zero.
 	private int timeout;
 	
-	private List<Question> questions = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Question.class)
+    private List<Question> questions = new ArrayList<>();
 
-	public Case() {
+	public MedicalCase() {
 		super();
 		this.randomize_answer_order = true;
 		this.allow_negative_score = true;
@@ -84,6 +101,14 @@ public class Case {
 
 	public void setTimeout(int timeout) {
 		this.timeout = timeout;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

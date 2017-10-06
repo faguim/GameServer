@@ -1,9 +1,21 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@Table(name = "answer")
 @XmlRootElement
 public class Answer {
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+	
 	public static final int INCORRECT = 0;
 	public static final int SEMI_CORRECT = 1;
 	public static final int CORRECT = 2;
@@ -13,6 +25,9 @@ public class Answer {
 	
 //	Indicate if thw question is correct, incorrect or semi-correct.
 	private int correctness;
+	
+	@ManyToOne(targetEntity = Question.class)
+	private Question question;
 	
 	public Answer() {
 		super();

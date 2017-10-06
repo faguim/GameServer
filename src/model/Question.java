@@ -3,10 +3,24 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@Table(name = "question")
 @XmlRootElement
 public class Question {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 	
 	public static final String TRUE_FALSE = "t/f";
 	public static final String MULTIPLE_CHOICE = "default"; // 1 correct answer
@@ -30,6 +44,10 @@ public class Question {
 //	  - Multiple Answer (multiple correct answers) - use the word "multiple" as the "question type".
 	private String type=MULTIPLE_CHOICE;
 	
+	@ManyToOne(targetEntity = MedicalCase.class)
+	private MedicalCase case1;
+	
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Answer.class)
 	private List<Answer> answers = new ArrayList<>();
 	
 	public Question() {
@@ -129,6 +147,22 @@ public class Question {
 
 	public void setCorrect_feedback_text(String correct_feedback_text) {
 		this.correct_feedback_text = correct_feedback_text;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public MedicalCase getCase1() {
+		return case1;
+	}
+
+	public void setCase1(MedicalCase case1) {
+		this.case1 = case1;
 	}
 
 }
