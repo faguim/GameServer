@@ -6,11 +6,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlAccessType;
 
 @Entity
 @Table(name = "answer")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Answer {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +31,7 @@ public class Answer {
 	private int correctness;
 	
 	@ManyToOne(targetEntity = Question.class)
+	@XmlTransient
 	private Question question;
 	
 	public Answer() {
@@ -69,5 +74,13 @@ public class Answer {
 
 	public void setCorrectness(int correctness) {
 		this.correctness = correctness;
+	}
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
 	}
 }

@@ -13,9 +13,6 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 public class BaseDAO<T> implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3822281476313085422L;
 
 	static EntityManagerFactory emf;
@@ -128,25 +125,10 @@ public class BaseDAO<T> implements Serializable {
 		getEntityManager().remove(getEntityManager().merge(object));
 	}
 
-	/** 
-	 * 
-	 * Otimizar a consulta utilizando Ex:
-	 * SELECT NEW br.com.exemplo.ClasseArbitraria(e.umAtributo, e.outroAtributo) FROM Entidade e
-	 * 
-	 * **/
-	@Deprecated
 	public T findById(Class<T> classType, int id){
 		return getEntityManager().find(classType, id);
 	}
 	
-	@SuppressWarnings("unchecked")
-	/** 
-	 * 
-	 * Otimizar a consulta utilizando Ex:
-	 * SELECT NEW br.com.exemplo.ClasseArbitraria(e.umAtributo, e.outroAtributo) FROM Entidade e
-	 * 
-	 * **/
-	@Deprecated
 	public List<T> findAll(Class<T> classType){
 		Query query = getEntityManager().createQuery("SELECT object(o) FROM " + classType.getName() + " AS o");
 		return query.getResultList(); 
