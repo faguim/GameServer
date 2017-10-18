@@ -45,7 +45,7 @@ public class Question {
 	private String type=MULTIPLE_CHOICE;
 	
 	@ManyToOne(targetEntity = MedicalCase.class)
-	private MedicalCase case1;
+	private MedicalCase medicalCase;
 	
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Answer.class)
 	private List<Answer> answers = new ArrayList<>();
@@ -157,12 +157,11 @@ public class Question {
 		this.id = id;
 	}
 
-	public MedicalCase getCase1() {
-		return case1;
+	public MedicalCase getMedicalCase() {
+		return medicalCase;
 	}
 
-	public void setCase1(MedicalCase case1) {
-		this.case1 = case1;
+	public void setMedicalCase(MedicalCase medicalCase) {
+		this.medicalCase = medicalCase;
 	}
-
 }
