@@ -1,6 +1,12 @@
-model/MedicalCase.class
 model/Answer.class
-dao/CaseDAO.class
+META-INF/persistence.xml
+control/REST_model.png
+dao/MedicalCaseDAO.class
+control/REST_model.xml
+control/RestService.class
+model/MedicalCase.class
+control/CaseRegister.class
+model/class_model.xml
+model/class_model.png
 model/Question.class
 dao/BaseDAO.class
-control/RestService.class

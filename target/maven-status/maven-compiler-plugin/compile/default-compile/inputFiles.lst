@@ -1,6 +1,7 @@
 /home/fagner/git/GameServer/src/model/Answer.java
 /home/fagner/git/GameServer/src/dao/BaseDAO.java
 /home/fagner/git/GameServer/src/model/Question.java
+/home/fagner/git/GameServer/src/control/CaseRegister.java
 /home/fagner/git/GameServer/src/control/RestService.java
 /home/fagner/git/GameServer/src/model/MedicalCase.java
-/home/fagner/git/GameServer/src/dao/CaseDAO.java
+/home/fagner/git/GameServer/src/dao/MedicalCaseDAO.java
