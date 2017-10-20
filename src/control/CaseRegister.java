@@ -141,13 +141,20 @@ public class CaseRegister {
 		addAnswers(Arrays.asList(q9A1, q9A2, q9A3, q9A4), q9);
 		addScores(10, 5, -5, q9);
 
-		MedicalCase medicalCase = new MedicalCase();
-		addQuestions(Arrays.asList(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9), medicalCase);
-		medicalCase.setTimeout(10);
-		
 		caseDAO.startOperation();
+
+		MedicalCase medicalCase = caseDAO.findByName("Respiratory Failure");
+		if (medicalCase == null){
+			medicalCase = new MedicalCase();
+			medicalCase.setName("Respiratory Failure");
+			medicalCase.setTimeout(10);
+		}
+
+		addQuestions(Arrays.asList(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9), medicalCase);
+		
 		caseDAO.save(medicalCase);
 		caseDAO.stopOperation(true);
+		System.out.println("foi");
 	}
 
 	public void addAnswers(List<Answer> answers, Question question) {
