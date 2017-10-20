@@ -49,10 +49,7 @@ public class Question {
 	private String type=MULTIPLE_CHOICE;
 	
 	@ManyToOne(targetEntity = MedicalCase.class)
-<<<<<<< HEAD
 	@XmlTransient
-=======
->>>>>>> branch 'master' of https://github.com/faguim/GameServer.git
 	private MedicalCase medicalCase;
 	
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Answer.class)
