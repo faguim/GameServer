@@ -1,4 +1,6 @@
+model/MedicalCase.class
 model/Answer.class
-model/Case.class
+dao/CaseDAO.class
 model/Question.class
+dao/BaseDAO.class
 control/RestService.class

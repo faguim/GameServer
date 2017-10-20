@@ -11,11 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "question")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Question {
 	
 	@Id
@@ -45,7 +49,8 @@ public class Question {
 	private String type=MULTIPLE_CHOICE;
 	
 	@ManyToOne(targetEntity = MedicalCase.class)
-	private MedicalCase case1;
+	@XmlTransient
+	private MedicalCase medicalCase;
 	
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Answer.class)
 	private List<Answer> answers = new ArrayList<>();
@@ -157,12 +162,12 @@ public class Question {
 		this.id = id;
 	}
 
-	public MedicalCase getCase1() {
-		return case1;
+	public MedicalCase getMedicalCase() {
+		return medicalCase;
 	}
 
-	public void setCase1(MedicalCase case1) {
-		this.case1 = case1;
+	public void setMedicalCase(MedicalCase medicalCase) {
+		this.medicalCase = medicalCase;
 	}
 
 }
