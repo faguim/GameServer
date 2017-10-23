@@ -1,16 +1,25 @@
 package control;
 
+import javax.persistence.Transient;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.sun.jersey.api.json.JSONWithPadding;
 
 import dao.MedicalCaseDAO;
 import model.MedicalCase;
+import model.Question;
 
 @Path("")
 public class RestService {
@@ -18,22 +27,78 @@ public class RestService {
 	MedicalCaseDAO caseDAO = new MedicalCaseDAO();
 	
 	@GET
-	@Path("/casejsonp")
+	@Path("/case")
 	@Produces(MediaType.APPLICATION_JSON)
-	public MedicalCase getCaseJSONP() {
+	public Response getCase() {
+		System.out.println("asdasudyasdyuasud");
 		Integer id = 1;
-		
 		MedicalCase medicalCase = caseDAO.findById(MedicalCase.class, id);
-		return medicalCase;
+		
+		return Response.ok()
+				.entity(medicalCase)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.build();
+
+//		return medicalCase;
 	}
 	
 	@GET
-	@Path("/case")
+	@Path("/casejsonp")
     @Produces({ "application/x-javascript", MediaType.APPLICATION_JSON + ";charset=utf-8" })
-	public JSONWithPadding getCase(@QueryParam("callback") String callback) {
+	public JSONWithPadding getCaseJSONP(@QueryParam("callback") String callback) {
 		Integer id = 1;
 		
 		MedicalCase medicalCase = caseDAO.findById(MedicalCase.class, id);
         return new JSONWithPadding(new GenericEntity<MedicalCase>(medicalCase) {}, callback);
+	}
+	
+	@POST
+	@Path("/case/save")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response saveCase(String medicalCaseParam) {
+		System.out.println(medicalCaseParam);
+		JSONObject medicalcaseJSON = new JSONObject(medicalCaseParam);
+		MedicalCase medicalCase = new MedicalCase();
+		
+		medicalCase.setName(medicalcaseJSON.getString("name"));
+		medicalCase.setConclusion_won_text(medicalcaseJSON.getString("won_text"));
+		medicalCase.setConclusion_lost_text(medicalcaseJSON.getString("lost_text"));
+		medicalCase.setRandomize_answer_order(medicalcaseJSON.getBoolean("randomize_answer"));
+		medicalCase.setRandomize_question_order(medicalcaseJSON.getBoolean("randomize_question"));
+		medicalCase.setAllow_negative_score(medicalcaseJSON.getBoolean("allow_negative_score"));
+		medicalCase.setTimeout(10);
+
+		JSONArray questions = medicalcaseJSON.getJSONArray("questions");
+        for (int i = 0; i < questions.length(); i++) {
+        	Question question = new Question();
+        	
+        	question.setTitle(questions.getJSONObject(i).getString("title"));
+        	question.setDescription(questions.getJSONObject(i).getString("description"));
+
+        	question.setRight_score(questions.getJSONObject(i).getInt("right_score"));
+            question.setSemi_right_score(questions.getJSONObject(i).getInt("semi_right_score"));
+            question.setWrong_score(questions.getJSONObject(i).getInt("wrong_score"));
+
+            question.setIncorrect_feedback_text(questions.getJSONObject(i).getString("incorrect_feedback"));
+            question.setCorrect_feedback_text(questions.getJSONObject(i).getString("correct_feedback"));
+
+            medicalCase.getQuestions().add(question);
+            question.setMedicalCase(medicalCase);
+        }
+        
+        System.out.println(medicalCase);
+        
+		caseDAO.startOperation();
+		caseDAO.save(medicalCase);
+		caseDAO.stopOperation(true);
+		
+		return Response.ok()
+				.entity(medicalCaseParam)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.build();
+
+
 	}
 }

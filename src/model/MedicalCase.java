@@ -148,4 +148,15 @@ public class MedicalCase implements Serializable{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "MedicalCase [id=" + id + ", name=" + name + ", conclusion_won_text=" + conclusion_won_text
+				+ ", conclusion_lost_text=" + conclusion_lost_text + ", randomize_answer_order="
+				+ randomize_answer_order + ", allow_negative_score=" + allow_negative_score
+				+ ", randomize_question_order=" + randomize_question_order + ", timeout=" + timeout + ", questions="
+				+ questions + "]";
+	}
+	
+	
 }

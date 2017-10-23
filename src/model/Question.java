@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,6 +37,8 @@ public class Question {
 	private int right_score;
 	private int semi_right_score;
 	private int wrong_score;
+	
+	@Transient
 	private int max_score;
 	
 //	Feedback Information if question type is "multiple"
@@ -169,4 +172,15 @@ public class Question {
 	public void setMedicalCase(MedicalCase medicalCase) {
 		this.medicalCase = medicalCase;
 	}
+
+	@Override
+	public String toString() {
+		return "Question [id=" + id + ", title=" + title + ", description=" + description + ", right_score="
+				+ right_score + ", semi_right_score=" + semi_right_score + ", wrong_score=" + wrong_score
+				+ ", max_score=" + max_score + ", incorrect_feedback_text=" + incorrect_feedback_text
+				+ ", correct_feedback_text=" + correct_feedback_text + ", type=" + type + ", answers=" + answers + "]";
+	}
+
+	
+	
 }
