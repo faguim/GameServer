@@ -1,11 +1,8 @@
 package control;
 
-import javax.persistence.Transient;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
@@ -18,6 +15,7 @@ import org.json.JSONObject;
 import com.sun.jersey.api.json.JSONWithPadding;
 
 import dao.MedicalCaseDAO;
+import model.Answer;
 import model.MedicalCase;
 import model.Question;
 
@@ -57,6 +55,8 @@ public class RestService {
 	@Path("/case/save")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response saveCase(String medicalCaseParam) {
+		caseDAO.startOperation();
+
 		System.out.println(medicalCaseParam);
 		JSONObject medicalcaseJSON = new JSONObject(medicalCaseParam);
 		MedicalCase medicalCase = new MedicalCase();
@@ -82,14 +82,25 @@ public class RestService {
 
             question.setIncorrect_feedback_text(questions.getJSONObject(i).getString("incorrect_feedback"));
             question.setCorrect_feedback_text(questions.getJSONObject(i).getString("correct_feedback"));
-
+            
+            JSONArray jsonArray = questions.getJSONObject(i).getJSONArray("answers");
+            
+            for (int j = 0; j < jsonArray.length(); j++) {
+            	Answer answer = new Answer();
+            	answer.setCorrectness(jsonArray.getJSONObject(j).getInt("correctness"));
+            	answer.setFeedback_text(jsonArray.getJSONObject(j).getString("feedback_text"));
+            	answer.setText(jsonArray.getJSONObject(j).getString("text"));
+            	
+            	question.getAnswers().add(answer);
+            	answer.setQuestion(question);
+			}
+            
             medicalCase.getQuestions().add(question);
             question.setMedicalCase(medicalCase);
         }
         
         System.out.println(medicalCase);
         
-		caseDAO.startOperation();
 		caseDAO.save(medicalCase);
 		caseDAO.stopOperation(true);
 		
@@ -98,7 +109,5 @@ public class RestService {
 				.header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
 				.build();
-
-
 	}
 }

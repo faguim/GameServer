@@ -151,7 +151,7 @@ public class CaseRegister {
 		}
 
 		addQuestions(Arrays.asList(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9), medicalCase);
-		
+		System.out.println(medicalCase);
 		caseDAO.save(medicalCase);
 		caseDAO.stopOperation(true);
 		System.out.println("foi");

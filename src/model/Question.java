@@ -38,9 +38,6 @@ public class Question {
 	private int semi_right_score;
 	private int wrong_score;
 	
-	@Transient
-	private int max_score;
-	
 //	Feedback Information if question type is "multiple"
 	private String incorrect_feedback_text;
 	private String correct_feedback_text;
@@ -126,6 +123,7 @@ public class Question {
 	}
 
 	public int getMax_score() {
+		int max_score = 0;
 		for (Answer answer : answers) {
 			if (answer.getCorrectness() == 2) {
 				max_score += right_score;
@@ -135,10 +133,6 @@ public class Question {
 			}		
 		}
 		return max_score;
-	}
-
-	public void setMax_score(int max_score) {
-		this.max_score = max_score;
 	}
 
 	public String getIncorrect_feedback_text() {
@@ -177,10 +171,7 @@ public class Question {
 	public String toString() {
 		return "Question [id=" + id + ", title=" + title + ", description=" + description + ", right_score="
 				+ right_score + ", semi_right_score=" + semi_right_score + ", wrong_score=" + wrong_score
-				+ ", max_score=" + max_score + ", incorrect_feedback_text=" + incorrect_feedback_text
-				+ ", correct_feedback_text=" + correct_feedback_text + ", type=" + type + ", answers=" + answers + "]";
+				+ ", incorrect_feedback_text=" + incorrect_feedback_text + ", correct_feedback_text="
+				+ correct_feedback_text + ", type=" + type + ", answers=" + answers + "]";
 	}
-
-	
-	
 }
