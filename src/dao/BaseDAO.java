@@ -38,7 +38,7 @@ public class BaseDAO<T> implements Serializable {
 		if (emf != null)
 			return emf;
 		else {
-			emf = Persistence.createEntityManagerFactory("healthgame");
+			emf = Persistence.createEntityManagerFactory("healthdb");
 			return emf;
 		}
 	}

@@ -1,8 +1,13 @@
 package control;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
@@ -25,15 +30,31 @@ public class RestService {
 	MedicalCaseDAO caseDAO = new MedicalCaseDAO();
 	
 	@GET
-	@Path("/case")
+	@Path("/case/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCase() {
-		System.out.println("asdasudyasdyuasud");
-		Integer id = 1;
-		MedicalCase medicalCase = caseDAO.findById(MedicalCase.class, id);
+	public Response getCase(@PathParam("id") int id) {
+		Integer idt = 1;
+		MedicalCase medicalCase = caseDAO.findById(MedicalCase.class, idt);
 		
 		return Response.ok()
 				.entity(medicalCase)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.build();
+	}
+	
+	@GET
+	@Path("/cases")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCases() {
+		List<MedicalCase> cases = new ArrayList<>();
+
+		cases = caseDAO.findAll(MedicalCase.class);
+		GenericEntity< List<MedicalCase> > casesReturn = new GenericEntity<List<MedicalCase>>(cases){};
+		
+		System.out.println(cases);
+		return Response.ok()
+				.entity(casesReturn)
 				.header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
 				.build();

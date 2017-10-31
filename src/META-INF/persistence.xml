@@ -4,7 +4,7 @@
 		xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
 		version="1.0">
 
-	<persistence-unit name="healthgame" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="healthdb" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
 		<class>model.MedicalCase</class>
@@ -17,7 +17,7 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
 			<property name="javax.persistence.jdbc.password" value="root"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/healthgame"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/healthdb"/>
 		</properties>
 	</persistence-unit>
 </persistence>
