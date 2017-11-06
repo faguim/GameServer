@@ -8,8 +8,8 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
 		<class>model.MedicalCase</class>
-		<class>model.Question</class>
-		<class>model.Answer</class>
+		<class>model.State</class>
+		<class>model.Action</class>
 		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>

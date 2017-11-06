@@ -20,9 +20,9 @@ import org.json.JSONObject;
 import com.sun.jersey.api.json.JSONWithPadding;
 
 import dao.MedicalCaseDAO;
-import model.Answer;
+import model.Action;
 import model.MedicalCase;
-import model.Question;
+import model.State;
 
 @Path("")
 public class RestService {
@@ -83,41 +83,42 @@ public class RestService {
 		MedicalCase medicalCase = new MedicalCase();
 		
 		medicalCase.setName(medicalcaseJSON.getString("name"));
-		medicalCase.setConclusion_won_text(medicalcaseJSON.getString("won_text"));
-		medicalCase.setConclusion_lost_text(medicalcaseJSON.getString("lost_text"));
-		medicalCase.setRandomize_answer_order(medicalcaseJSON.getBoolean("randomize_answer"));
-		medicalCase.setRandomize_question_order(medicalcaseJSON.getBoolean("randomize_question"));
+		medicalCase.setWon_text(medicalcaseJSON.getString("won_text"));
+		medicalCase.setLost_text(medicalcaseJSON.getString("lost_text"));
+		medicalCase.setRandomize_actions(medicalcaseJSON.getBoolean("randomize_actions"));
 		medicalCase.setAllow_negative_score(medicalcaseJSON.getBoolean("allow_negative_score"));
 		medicalCase.setTimeout(10);
 
-		JSONArray questions = medicalcaseJSON.getJSONArray("questions");
-        for (int i = 0; i < questions.length(); i++) {
-        	Question question = new Question();
+		JSONArray states = medicalcaseJSON.getJSONArray("states");
+        for (int i = 0; i < states.length(); i++) {
+        	State state = new State();
         	
-        	question.setTitle(questions.getJSONObject(i).getString("title"));
-        	question.setDescription(questions.getJSONObject(i).getString("description"));
-
-        	question.setRight_score(questions.getJSONObject(i).getInt("right_score"));
-            question.setSemi_right_score(questions.getJSONObject(i).getInt("semi_right_score"));
-            question.setWrong_score(questions.getJSONObject(i).getInt("wrong_score"));
-
-            question.setIncorrect_feedback_text(questions.getJSONObject(i).getString("incorrect_feedback"));
-            question.setCorrect_feedback_text(questions.getJSONObject(i).getString("correct_feedback"));
+        	state.setTitle(states.getJSONObject(i).getString("title"));
+        	state.setDescription(states.getJSONObject(i).getString("description"));
+//        	state.setIdent(states.getJSONObject(i).getInt("ident"));
+        	
+            JSONArray actions = states.getJSONObject(i).getJSONArray("actions");
             
-            JSONArray jsonArray = questions.getJSONObject(i).getJSONArray("answers");
-            
-            for (int j = 0; j < jsonArray.length(); j++) {
-            	Answer answer = new Answer();
-            	answer.setCorrectness(jsonArray.getJSONObject(j).getInt("correctness"));
-            	answer.setFeedback_text(jsonArray.getJSONObject(j).getString("feedback_text"));
-            	answer.setText(jsonArray.getJSONObject(j).getString("text"));
+            for (int j = 0; j < actions.length(); j++) {
+            	Action action = new Action();
+            	action.setCorrect(actions.getJSONObject(j).getBoolean("correct"));
+            	action.setProceed(actions.getJSONObject(j).getBoolean("proceed"));
+            	action.setText(actions.getJSONObject(j).getString("text"));
             	
-            	question.getAnswers().add(answer);
-            	answer.setQuestion(question);
+            	state.getActions().add(action);
+            	action.setState(state);
 			}
             
-            medicalCase.getQuestions().add(question);
-            question.setMedicalCase(medicalCase);
+            medicalCase.getStates().add(state);
+            state.setMedicalCase(medicalCase);
+        }
+        
+        for (int i = 0; i < states.length(); i++) {
+            JSONArray actions = states.getJSONObject(i).getJSONArray("actions");
+            for (int j = 0; j < actions.length(); j++) {
+            	State target = medicalCase.getStates().get(actions.getJSONObject(j).getInt("target"));
+            	medicalCase.getStates().get(i).getActions().get(j).setTarget(target);
+			}
         }
         
         System.out.println(medicalCase);

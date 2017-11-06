@@ -28,60 +28,24 @@ public class MedicalCase implements Serializable{
 	
 	private String name;
 	
-	private String conclusion_won_text = "CONGRATULATIONS: YOU WON! :)";
-	private String conclusion_lost_text = "GAME OVER: YOU LOST! :P";
+	private String won_text = "CONGRATULATIONS: YOU WON! :)";
+	private String lost_text = "GAME OVER: YOU LOST! :P";
 	
 //	Randomize the order in which answer buttons are presented to the user.
-	private boolean randomize_answer_order;
+	private boolean randomize_actions;
 	private boolean allow_negative_score;
-	
-//	Randomize the order in which questions are presented to the user.
-	private boolean randomize_question_order;
 	
 //	Control the amount of time in the countdown timer. To turn it off set the value to zero.
 	private int timeout;
 	
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Question.class)
-    private List<Question> questions = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = State.class)
+    private List<State> states = new ArrayList<>();
 
 	public MedicalCase() {
 		super();
-		this.randomize_answer_order = true;
+		this.setRandomize_actions(true);
 		this.allow_negative_score = true;
-		this.randomize_question_order = false;
 		this.timeout = 0;
-	}
-
-	public String getConclusion_won_text() {
-		return conclusion_won_text;
-	}
-
-	public void setConclusion_won_text(String conclusion_won_text) {
-		this.conclusion_won_text = conclusion_won_text;
-	}
-
-	public String getConclusion_lost_text() {
-		return conclusion_lost_text;
-	}
-
-	public void setConclusion_lost_text(String conclusion_lost_text) {
-		this.conclusion_lost_text = conclusion_lost_text;
-	}
-
-	public List<Question> getQuestions() {
-		return questions;
-	}
-
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
-	}
-
-	public boolean isRandomize_answer_order() {
-		return randomize_answer_order;
-	}
-
-	public void setRandomize_answer_order(boolean randomize_answer_order) {
-		this.randomize_answer_order = randomize_answer_order;
 	}
 
 	public boolean isAllow_negative_score() {
@@ -90,14 +54,6 @@ public class MedicalCase implements Serializable{
 
 	public void setAllow_negative_score(boolean allow_negative_score) {
 		this.allow_negative_score = allow_negative_score;
-	}
-
-	public boolean isRandomize_question_order() {
-		return randomize_question_order;
-	}
-
-	public void setRandomize_question_order(boolean randomize_question_order) {
-		this.randomize_question_order = randomize_question_order;
 	}
 
 	public int getTimeout() {
@@ -149,14 +105,44 @@ public class MedicalCase implements Serializable{
 		return true;
 	}
 
+	public String getWon_text() {
+		return won_text;
+	}
+
+	public void setWon_text(String won_text) {
+		this.won_text = won_text;
+	}
+
+	public String getLost_text() {
+		return lost_text;
+	}
+
+	public void setLost_text(String lost_text) {
+		this.lost_text = lost_text;
+	}
+
+	public boolean isRandomize_actions() {
+		return randomize_actions;
+	}
+
+	public void setRandomize_actions(boolean randomize_actions) {
+		this.randomize_actions = randomize_actions;
+	}
+
+	public List<State> getStates() {
+		return states;
+	}
+
+	public void setStates(List<State> states) {
+		this.states = states;
+	}
+
 	@Override
 	public String toString() {
-		return "MedicalCase [id=" + id + ", name=" + name + ", conclusion_won_text=" + conclusion_won_text
-				+ ", conclusion_lost_text=" + conclusion_lost_text + ", randomize_answer_order="
-				+ randomize_answer_order + ", allow_negative_score=" + allow_negative_score
-				+ ", randomize_question_order=" + randomize_question_order + ", timeout=" + timeout + ", questions="
-				+ questions + "]";
+		return "MedicalCase [id=" + id + ", name=" + name + ", won_text=" + won_text + ", lost_text=" + lost_text
+				+ ", randomize_actions=" + randomize_actions + ", allow_negative_score=" + allow_negative_score
+				+ ", timeout=" + timeout + ", states=" + states + "]";
 	}
-	
+
 	
 }
