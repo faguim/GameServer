@@ -29,7 +29,7 @@ public class State {
 	
 	private String title;
 	private String description;
-	
+	private String feedback;
 //	@XmlTransient
 //	private int ident;
 	
@@ -87,6 +87,14 @@ public class State {
 
 	public void setActions(List<Action> actions) {
 		this.actions = actions;
+	}
+
+	public String getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
 	}
 
 //	public int getIdent() {

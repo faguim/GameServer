@@ -29,8 +29,7 @@ public class Action {
 	@XmlTransient
 	private State state;
 	
-	@ManyToOne(targetEntity = State.class)
-	private State target;
+	private Integer target;
 	
 	public Action() {
 		super();
@@ -80,12 +79,11 @@ public class Action {
 		this.proceed = proceed;
 	}
 
-	public State getTarget() {
+	public Integer getTarget() {
 		return target;
 	}
 
-	public void setTarget(State target) {
+	public void setTarget(Integer target) {
 		this.target = target;
 	}
-
 }

@@ -95,6 +95,7 @@ public class RestService {
         	
         	state.setTitle(states.getJSONObject(i).getString("title"));
         	state.setDescription(states.getJSONObject(i).getString("description"));
+        	state.setFeedback(states.getJSONObject(i).getString("feedback"));
 //        	state.setIdent(states.getJSONObject(i).getInt("ident"));
         	
             JSONArray actions = states.getJSONObject(i).getJSONArray("actions");
@@ -104,6 +105,7 @@ public class RestService {
             	action.setCorrect(actions.getJSONObject(j).getBoolean("correct"));
             	action.setProceed(actions.getJSONObject(j).getBoolean("proceed"));
             	action.setText(actions.getJSONObject(j).getString("text"));
+            	action.setTarget(actions.getJSONObject(j).getInt("target"));
             	
             	state.getActions().add(action);
             	action.setState(state);
@@ -113,13 +115,13 @@ public class RestService {
             state.setMedicalCase(medicalCase);
         }
         
-        for (int i = 0; i < states.length(); i++) {
-            JSONArray actions = states.getJSONObject(i).getJSONArray("actions");
-            for (int j = 0; j < actions.length(); j++) {
-            	State target = medicalCase.getStates().get(actions.getJSONObject(j).getInt("target"));
-            	medicalCase.getStates().get(i).getActions().get(j).setTarget(target);
-			}
-        }
+//        for (int i = 0; i < states.length(); i++) {
+//            JSONArray actions = states.getJSONObject(i).getJSONArray("actions");
+//            for (int j = 0; j < actions.length(); j++) {
+//            	State target = medicalCase.getStates().get();
+//            	medicalCase.getStates().get(i).getActions().get(j).setTarget(target);
+//			}
+//        }
         
         System.out.println(medicalCase);
         
