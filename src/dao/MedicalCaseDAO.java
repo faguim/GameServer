@@ -20,5 +20,11 @@ public class MedicalCaseDAO extends BaseDAO<MedicalCase> implements Serializable
 			return (MedicalCase) query.getSingleResult();
 		else return null;
 	}
+
+
+
+	public void closeConnection() {
+		emf.close();
+	}
 	
 }

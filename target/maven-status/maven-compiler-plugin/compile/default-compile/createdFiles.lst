@@ -1,9 +1,10 @@
 control/RestService$1.class
-model/Answer.class
 dao/MedicalCaseDAO.class
 control/RestService.class
 model/MedicalCase.class
 control/CaseRegister.class
 control/RestService$2.class
-model/Question.class
+ontologyenrichment/Enrich.class
 dao/BaseDAO.class
+model/Action.class
+model/State.class
