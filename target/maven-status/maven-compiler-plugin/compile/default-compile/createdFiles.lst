@@ -4,7 +4,7 @@ control/RestService.class
 model/MedicalCase.class
 control/CaseRegister.class
 control/RestService$2.class
-ontologyenrichment/Enrich.class
 dao/BaseDAO.class
+ontologyenrichment/Enrich.class
 model/Action.class
 model/State.class

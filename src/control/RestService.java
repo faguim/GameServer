@@ -33,8 +33,8 @@ public class RestService {
 	@Path("/case/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCase(@PathParam("id") int id) {
-		Integer idt = 1;
-		MedicalCase medicalCase = caseDAO.findById(MedicalCase.class, idt);
+		System.out.println(id);
+		MedicalCase medicalCase = caseDAO.findById(MedicalCase.class, id);
 		
 		return Response.ok()
 				.entity(medicalCase)
@@ -52,7 +52,6 @@ public class RestService {
 		cases = caseDAO.findAll(MedicalCase.class);
 		GenericEntity< List<MedicalCase> > casesReturn = new GenericEntity<List<MedicalCase>>(cases){};
 		
-		System.out.println(cases);
 		return Response.ok()
 				.entity(casesReturn)
 				.header("Access-Control-Allow-Origin", "*")
@@ -69,6 +68,7 @@ public class RestService {
 		Integer id = 1;
 		
 		MedicalCase medicalCase = caseDAO.findById(MedicalCase.class, id);
+
         return new JSONWithPadding(new GenericEntity<MedicalCase>(medicalCase) {}, callback);
 	}
 	
@@ -87,7 +87,7 @@ public class RestService {
 		medicalCase.setLost_text(medicalcaseJSON.getString("lost_text"));
 		medicalCase.setRandomize_actions(medicalcaseJSON.getBoolean("randomize_actions"));
 		medicalCase.setAllow_negative_score(medicalcaseJSON.getBoolean("allow_negative_score"));
-		medicalCase.setTimeout(10);
+		medicalCase.setTimeout(medicalcaseJSON.getInt("timeout"));
 
 		JSONArray states = medicalcaseJSON.getJSONArray("states");
         for (int i = 0; i < states.length(); i++) {
@@ -127,7 +127,7 @@ public class RestService {
         
 		caseDAO.save(medicalCase);
 		caseDAO.stopOperation(true);
-		
+		caseDAO.closeConnection();
 		return Response.ok()
 				.entity(medicalCaseParam)
 				.header("Access-Control-Allow-Origin", "*")
