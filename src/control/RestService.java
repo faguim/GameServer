@@ -3,7 +3,6 @@ package control;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -33,7 +32,6 @@ public class RestService {
 	@Path("/case/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCase(@PathParam("id") int id) {
-		System.out.println(id);
 		MedicalCase medicalCase = caseDAO.findById(MedicalCase.class, id);
 		
 		return Response.ok()
@@ -61,16 +59,20 @@ public class RestService {
 //		return medicalCase;
 	}
 	
-	@GET
-	@Path("/casejsonp")
-    @Produces({ "application/x-javascript", MediaType.APPLICATION_JSON + ";charset=utf-8" })
-	public JSONWithPadding getCaseJSONP(@QueryParam("callback") String callback) {
-		Integer id = 1;
-		
-		MedicalCase medicalCase = caseDAO.findById(MedicalCase.class, id);
+	public Response getAlternativeStates(@PathParam("text") String text) {
+		List<String> altStates = new ArrayList<>();
 
-        return new JSONWithPadding(new GenericEntity<MedicalCase>(medicalCase) {}, callback);
+		
+		
+		GenericEntity<List<String>> altStatesReturn = new GenericEntity<List<String>>(altStates){};
+		
+		return Response.ok()
+				.entity(altStatesReturn)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.build();
 	}
+	
 	
 	@POST
 	@Path("/case/save")
@@ -127,11 +129,22 @@ public class RestService {
         
 		caseDAO.save(medicalCase);
 		caseDAO.stopOperation(true);
-		caseDAO.closeConnection();
+//		caseDAO.closeConnection();
 		return Response.ok()
 				.entity(medicalCaseParam)
 				.header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
 				.build();
 	}
+	@GET
+	@Path("/casejsonp")
+    @Produces({ "application/x-javascript", MediaType.APPLICATION_JSON + ";charset=utf-8" })
+	public JSONWithPadding getCaseJSONP(@QueryParam("callback") String callback) {
+		Integer id = 1;
+		
+		MedicalCase medicalCase = caseDAO.findById(MedicalCase.class, id);
+
+        return new JSONWithPadding(new GenericEntity<MedicalCase>(medicalCase) {}, callback);
+	}
+
 }
